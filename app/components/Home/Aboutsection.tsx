@@ -55,6 +55,9 @@ type RepeaterField = {
       sourceUrl:string;
     }
   }
+  rpPostCustomFields: {
+        order:number;
+      }
 }
 
 type RepeaterFields = {
@@ -124,7 +127,7 @@ export default function AboutSection({section,repeaterfields}:{section?:Section,
             </p>
 
             <div className="grid grid-cols-2 gap-3">
-              {repeaterfields?.nodes?.map((repeaterfield) => (
+              {repeaterfields?.nodes?.sort((a, b) => a.rpPostCustomFields.order - b.rpPostCustomFields.order).map((repeaterfield) => (
                 <div
                   key={repeaterfield.id}
                   className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 hover:border-indigo-200 hover:bg-indigo-50/40 transition-colors duration-200"

@@ -40,6 +40,9 @@ type RepeaterField = {
       sourceUrl:string;
     }
   }
+  rpPostCustomFields: {
+        order:number;
+      }
 }
 
 type RepeaterFields = {
