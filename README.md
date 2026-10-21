@@ -2,7 +2,41 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Set up environment variables
+
+The `.env.local` file is git-ignored, so it is **not** included when you clone the repo. Create it manually in the project root (same level as `package.json`):
+
+```bash
+# macOS / Linux / Git Bash
+touch .env.local
+
+# Windows CMD
+type nul > .env.local
+```
+
+Add the following content:
+
+```dotenv
+NEXT_PUBLIC_WORDPRESS_API_URL=http://localhost/wordpress-7.0/graphql
+```
+
+| Variable | Description |
+| --- | --- |
+| `NEXT_PUBLIC_WORDPRESS_API_URL` | GraphQL endpoint of the WordPress backend. Update the URL if your local WordPress runs on a different path or port. |
+
+Notes:
+
+- The local WordPress site (e.g. via WAMP) must be running, or the app will not be able to fetch data.
+- Restart the dev server after creating or editing `.env.local`. Next.js reads env files only at startup.
+- Never commit `.env.local`. Ask the team for production or staging values.
+
+### 3. Run the development server
 
 ```bash
 npm run dev
@@ -32,5 +66,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+When deploying, add `NEXT_PUBLIC_WORDPRESS_API_URL` under **Project → Settings → Environment Variables** and point it to your hosted WordPress GraphQL URL (not `localhost`).
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
