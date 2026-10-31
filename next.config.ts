@@ -6,14 +6,14 @@ const nextConfig: NextConfig = {
     unoptimized: process.env.NODE_ENV === "development",
     remotePatterns:[
       {
-        protocol:"http",
-        hostname:"192.168.29.160",
-        pathname: "/wordpress-7.0/**",
+        protocol:"https",
+        hostname:"floralwhite-owl-682074.hostingersite.com",
+        pathname: "/wp-content/uploads/**",
       },
       {
         protocol:"http",
         hostname:"localhost",
-        pathname: "/wordpress-7.0/**",
+        pathname: "/wordpress-7.0/wp-content/uploads/**",
       },
     ],
   },
