@@ -5,6 +5,8 @@ import HeroSection from "./components/Home/Herosection";
 import ServicesSection from "./components/Home/Servicessection";
 import { GET_HOME_PAGE } from "./graphql/queries/homeQueries";
 
+export const revalidate = 60;
+
 type Tag ={
   name:string;
   id:string;
