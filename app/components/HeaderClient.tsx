@@ -12,19 +12,22 @@ type MenuItem = {
 
 type Details = {
     button:{
-    url: string;
-    title: string;
+    url?: string;
+    title?: string;
+    target?: string;
     }
-    siteLogo: {
-        node: {
-          altText: string;
-          sourceUrl: string;
+    siteLogo?: {
+        node?: {
+          altText?: string;
+          sourceUrl?: string;
         }
       }
 }
 
 export default function HeaderClient({ menus,details }:{ menus?:MenuItem[],details?: Details}) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const ctaUrl = details?.button?.url || "#contact";
+  const ctaTarget = details?.button?.target || undefined;
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
@@ -38,7 +41,7 @@ export default function HeaderClient({ menus,details }:{ menus?:MenuItem[],detai
         {details?.siteLogo?.node?.sourceUrl && (
             <Image 
             src={details?.siteLogo?.node?.sourceUrl}
-            alt={details?.siteLogo?.node?.altText}
+            alt={details?.siteLogo?.node?.altText || "Site logo"}
             width={120}
             height={40}
            
@@ -63,7 +66,9 @@ export default function HeaderClient({ menus,details }:{ menus?:MenuItem[],detai
 
         {/* Desktop CTA */}
         <a
-          href="#contact"
+          href={ctaUrl}
+          target={ctaTarget}
+          rel={ctaTarget === "_blank" ? "noopener noreferrer" : undefined}
           className="hidden md:inline-flex bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
         >
           {details?.button?.title}
@@ -104,7 +109,9 @@ export default function HeaderClient({ menus,details }:{ menus?:MenuItem[],detai
             </a>
           ))}
           <a
-            href="#contact"
+            href={ctaUrl}
+            target={ctaTarget}
+            rel={ctaTarget === "_blank" ? "noopener noreferrer" : undefined}
             onClick={() => setMenuOpen(false)}
             className="mt-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors text-center"
           >

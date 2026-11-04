@@ -60,7 +60,8 @@ export default function HeroSection({section}:{section?:Section1}) {
   return (
     <section
       ref={heroRef}
-      className="bg-slate-50 min-h-[92vh] flex items-center"
+      className="min-h-[92vh] flex items-center bg-slate-50 bg-cover bg-center"
+      style={{ backgroundImage: "url('/hero-bg-light.webp')" }}
     >
       <div className="w-full max-w-3xl mx-auto px-8 py-24 text-center">
 
