@@ -3,6 +3,7 @@ import AboutSection from "./components/Home/Aboutsection";
 import ContactCTA from "./components/Home/ContactCTA";
 import HeroSection from "./components/Home/Herosection";
 import ServicesSection from "./components/Home/Servicessection";
+import TechStackSection, { type TechStackSkill } from "./components/Home/TechStackSection";
 import { GET_HOME_PAGE } from "./graphql/queries/homeQueries";
 
 export const revalidate = 60;
@@ -32,24 +33,6 @@ type Services = {
   nodes:Service[];
 }
 
-type RepeaterField = {
-  id:string;
-  title:string;
-  content:string;
-  featuredImage:{
-    node:{
-      alttext:string;
-      sourceUrl:string;
-    }
-  }
-  rpPostCustomFields: {
-        order:number;
-      }
-}
-
-type RepeaterFields = {
-  nodes: RepeaterField[];
-}
 type HomePage = {
   page:{
     homePage:{
@@ -65,11 +48,17 @@ type HomePage = {
       }
       section2:{
         heading:string;
-      description:string;
-      button:{
-        url:string;
-        title:string;
-      }
+        description:string;
+        image:{
+          node:{
+            altText:string;
+            sourceUrl:string;
+          };
+        };
+        button:{
+          url:string;
+          title:string;
+        }
       }
       section1:{
         note:string;
@@ -88,7 +77,9 @@ type HomePage = {
     }
   }
   services: Services;
-  repeaterFields: RepeaterFields;
+  repeaterFields: {
+    nodes: TechStackSkill[];
+  };
 }
 
 export default async function Home() {
@@ -102,11 +93,10 @@ export default async function Home() {
   const section4description = homepagedetails?.data?.page?.homePage?.description;
 
   const CPTServices = homepagedetails?.data?.services;
+  const techStackSkills = homepagedetails?.data?.repeaterFields?.nodes ?? [];
 
   const CPTSection3 = homepagedetails?.data?.page?.homePage?.section3;
 
-  const CPTRepeaterFields = homepagedetails?.data?.repeaterFields;
-   
     const CPTSection2 = homepagedetails?.data?.page?.homePage?.section2;
 
     const section1 =homepagedetails?.data?.page?.homePage?.section1;
@@ -114,7 +104,8 @@ export default async function Home() {
   return (
     <>
     <HeroSection section = { section1 }/>
-    <AboutSection section={CPTSection2} repeaterfields={CPTRepeaterFields} />
+    <AboutSection section={CPTSection2} />
+    <TechStackSection skills={techStackSkills} />
     <ServicesSection section={ CPTSection3 } services = { CPTServices }/>
     <ContactCTA button = { section4button } title = {section4title} description = {section4description}/>
     </>
