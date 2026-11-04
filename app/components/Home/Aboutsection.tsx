@@ -3,67 +3,22 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const skills = [
-  {
-    icon: "⚡",
-    title: "Next.js 15",
-    subtitle: "App Router · RSC",
-  },
-  {
-    icon: "🐘",
-    title: "PHP / WordPress",
-    subtitle: "9 Years · Headless CMS",
-  },
-  {
-    icon: "🔷",
-    title: "TypeScript",
-    subtitle: "Typed React · Strict Mode",
-  },
-  {
-    icon: "🔗",
-    title: "GraphQL",
-    subtitle: "Apollo · WPGraphQL",
-  },
-  {
-    icon: "🎨",
-    title: "Tailwind CSS",
-    subtitle: "Utility-first Styling",
-  },
-  {
-    icon: "🛠️",
-    title: "Laravel",
-    subtitle: "REST API · Sanctum",
-  },
-];
-
 type Section = {
   heading:string;
-      description:string;
-      button:{
-        url:string;
-        title:string;
-      }
-}
-
-type RepeaterField = {
-  id:string;
-  title:string;
-  content:string;
-  featuredImage:{
+  description:string;
+  image:{
     node:{
-      alttext:string;
+      altText:string;
       sourceUrl:string;
-    }
+    };
+  };
+  button:{
+    url:string;
+    title:string;
   }
-  rpPostCustomFields: {
-        order:number;
-      }
 }
 
-type RepeaterFields = {
-  nodes: RepeaterField[];
-}
-export default function AboutSection({section,repeaterfields}:{section?:Section,repeaterfields?:RepeaterFields}) {
+export default function AboutSection({section}:{section?:Section}) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,7 +43,7 @@ export default function AboutSection({section,repeaterfields}:{section?:Section,
   return (
     <section id="about" className="bg-white py-24" ref={sectionRef}>
       <div className="max-w-6xl mx-auto px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16 items-center">
 
           {/* ── Left: About Text ── */}
           <div className="fade-up opacity-0 translate-y-6 transition-all duration-700 ease-out">
@@ -116,41 +71,20 @@ export default function AboutSection({section,repeaterfields}:{section?:Section,
 
           </div>
 
-          {/* ── Right: Skills Grid ── */}
+          {/* ── Right: Portrait ── */}
           <div
             className="fade-up opacity-0 translate-y-6 transition-all duration-700 ease-out"
             style={{ transitionDelay: "150ms" }}
           >
-
-            <p className="text-slate-400 text-xs font-semibold tracking-widest uppercase mb-6">
-              Tech Stack
-            </p>
-
-            <div className="grid grid-cols-2 gap-3">
-              {repeaterfields?.nodes?.sort((a, b) => a.rpPostCustomFields.order - b.rpPostCustomFields.order).map((repeaterfield) => (
-                <div
-                  key={repeaterfield.id}
-                  className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 hover:border-indigo-200 hover:bg-indigo-50/40 transition-colors duration-200"
-                  style={{ transitionDelay: `${1 * 60}ms` }}
-                >
-                  <span className="text-indigo-500 text-lg leading-none">
-                    <Image
-                    src={repeaterfield.featuredImage.node.sourceUrl}
-                    alt={repeaterfield?.featuredImage?.node?.alttext || ""}
-                    width={20}
-                    height={20}
-                    />
-                  </span>
-                  <div>
-                    <p className="text-slate-800 text-sm font-semibold">
-                      {repeaterfield.title}
-                    </p>
-                    <div className="text-slate-400 text-xs" dangerouslySetInnerHTML={{ __html: repeaterfield.content || "" }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-
+            {section?.image?.node?.sourceUrl && (
+              <Image
+                src={section.image.node.sourceUrl}
+                alt={section.image.node.altText || ""}
+                width={1600}
+                height={2000}
+                className="h-[360px] w-full rounded-xl object-contain"
+              />
+            )}
           </div>
 
         </div>
