@@ -6,10 +6,10 @@ export type TechStackSkill = {
   content: string;
   featuredImage: {
     node: {
-      altText: string;
-      sourceUrl: string;
-    };
-  };
+      altText: string | null;
+      sourceUrl: string | null;
+    } | null;
+  } | null;
   rpPostCustomFields: {
     order: number;
   };
@@ -37,29 +37,35 @@ export default function TechStackSection({
         </div>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {orderedSkills.map((skill) => (
-            <div
-              key={skill.id}
-              className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors duration-200 hover:border-indigo-200 hover:bg-indigo-50/40"
-            >
-              <Image
-                src={skill.featuredImage.node.sourceUrl}
-                alt={skill.featuredImage.node.altText || ""}
-                width={32}
-                height={32}
-                className="h-8 w-8 object-contain"
-              />
-              <div>
-                <h3 className="text-sm font-semibold text-slate-800">
-                  {skill.title}
-                </h3>
-                <div
-                  className="text-xs text-slate-400"
-                  dangerouslySetInnerHTML={{ __html: skill.content || "" }}
-                />
+          {orderedSkills.map((skill) => {
+            const image = skill.featuredImage?.node;
+
+            return (
+              <div
+                key={skill.id}
+                className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors duration-200 hover:border-indigo-200 hover:bg-indigo-50/40"
+              >
+                {image?.sourceUrl && (
+                  <Image
+                    src={image.sourceUrl}
+                    alt={image.altText ?? ""}
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 object-contain"
+                  />
+                )}
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-800">
+                    {skill.title}
+                  </h3>
+                  <div
+                    className="text-xs text-slate-400"
+                    dangerouslySetInnerHTML={{ __html: skill.content || "" }}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
