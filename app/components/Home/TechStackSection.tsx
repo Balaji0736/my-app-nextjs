@@ -25,7 +25,7 @@ export default function TechStackSection({
   );
 
   return (
-    <section className="bg-slate-50 py-20">
+    <section id="technologies" className="technologies bg-slate-50 py-20">
       <div className="mx-auto max-w-6xl px-8">
         <div className="mb-10 text-center">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-indigo-600">
