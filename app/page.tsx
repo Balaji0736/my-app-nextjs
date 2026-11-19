@@ -6,8 +6,10 @@ import ServicesSection from "./components/Home/Servicessection";
 import TechStackSection, { type TechStackSkill } from "./components/Home/TechStackSection";
 import { GET_HOME_PAGE } from "./graphql/queries/homeQueries";
 
+// Cache the home page data and revalidate it every 60 seconds.
 export const revalidate = 60;
 
+// Data types for homepage tags, services, and CMS fields.
 type Tag ={
   name:string;
   id:string;
@@ -84,23 +86,24 @@ type HomePage = {
 
 export default async function Home() {
 
+  // Fetch homepage content and custom fields from the GraphQL API.
   const homepagedetails = await client.query<HomePage>({query:GET_HOME_PAGE});
 
+  // Section 4 content: CTA button, heading, and description.
   const section4button = homepagedetails?.data?.page?.homePage?.button;
-
   const section4title = homepagedetails?.data?.page?.homePage?.heading;
-
   const section4description = homepagedetails?.data?.page?.homePage?.description;
 
+  // Services and technology skills displayed on the homepage.
   const CPTServices = homepagedetails?.data?.services;
   const techStackSkills = homepagedetails?.data?.repeaterFields?.nodes ?? [];
 
+  // CMS sections used by the services and about components.
   const CPTSection3 = homepagedetails?.data?.page?.homePage?.section3;
+  const CPTSection2 = homepagedetails?.data?.page?.homePage?.section2;
+  const section1 = homepagedetails?.data?.page?.homePage?.section1;
 
-    const CPTSection2 = homepagedetails?.data?.page?.homePage?.section2;
-
-    const section1 =homepagedetails?.data?.page?.homePage?.section1;
-
+  // Render the homepage sections in page order.
   return (
     <>
     <HeroSection section = { section1 }/>
