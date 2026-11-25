@@ -19,6 +19,7 @@ type Service ={
   id:string;
   title:string;
   content:string;
+  menuOrder:number;
   featuredImage:{
     node:{
       altText:string;

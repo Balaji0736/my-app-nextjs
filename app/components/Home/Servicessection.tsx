@@ -3,31 +3,6 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
-
-const services1 = [
-  {
-    icon: "🖥️",
-    title: "Headless WordPress",
-    description:
-      "WordPress as a content backend, Next.js as your fast, modern frontend. WPGraphQL + Apollo for seamless data fetching.",
-    tags: ["WPGraphQL", "Next.js", "Apollo"],
-  },
-  {
-    icon: "⚙️",
-    title: "Custom Web Applications",
-    description:
-      "Full-stack applications with PHP/Laravel backends and React/Next.js frontends. Auth, CRUD, APIs, admin panels — built to scale.",
-    tags: ["Laravel", "React", "TypeScript"],
-  },
-  {
-    icon: "🚀",
-    title: "Performance Optimisation",
-    description:
-      "Audit and improve Core Web Vitals, page load speed, and SEO for existing WordPress or Next.js sites. Measurable improvements, guaranteed.",
-    tags: ["Core Web Vitals", "SEO", "Caching"],
-  },
-];
-
 type Section3 = {
   heading:string;
   description:string;
@@ -42,6 +17,7 @@ type Service ={
   id:string;
   title:string;
   content:string;
+  menuOrder:number;
   featuredImage:{
     node:{
       altText:string;
@@ -60,6 +36,9 @@ type CPTServices = {
 
 export default function ServicesSection({section,services}:{section?:Section3,services?:CPTServices}) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const orderedServices = [...(services?.nodes ?? [])].sort(
+    (a, b) => (a.menuOrder ?? 0) - (b.menuOrder ?? 0)
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -101,7 +80,7 @@ export default function ServicesSection({section,services}:{section?:Section3,se
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services?.nodes?.map((service) => (
+          {orderedServices.map((service) => (
             <div
               key={service.id}
               className="fade-up opacity-0 translate-y-6 transition-all duration-700 ease-out"
