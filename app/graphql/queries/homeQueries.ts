@@ -47,11 +47,12 @@ query homepage {
   }
 
 
-  services {
+  services(where: {orderby: {field: MENU_ORDER, order: ASC}}) {
     nodes {
       id
       title
       content
+      menuOrder
       featuredImage {
         node {
           altText
